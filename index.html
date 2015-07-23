@@ -6,11 +6,18 @@
   </head>
   <body>
     <script>
-
+        //----INITIAL STATE--
       $(document).ready(function(){
         var $body = $('body');
         $body.html('');
 
+        //----PAUSE BUTTON----
+        $body.append('<button id="pause">Stop THIS MADNESS!!!</button>');
+        $('#pause').on('click', function(){
+          clearInterval(intervalID);
+        });
+
+        //---DISPLAY TWEETS FUNCTION----
         var displayTweets = function(){
           var index = streams.home.length - 1;
           while(index >= 0){
@@ -23,8 +30,9 @@
           streams.home = [];
         };
 
+        //----INITIALIZE----
         displayTweets();
-        setInterval(displayTweets, 500);
+        var intervalID = setInterval(displayTweets, 500);
       });
 
 
