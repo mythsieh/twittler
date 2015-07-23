@@ -20,7 +20,18 @@
           index -= 1;
         }
 
+        var aTest = function() {
+          var $body = $('body');
+          var tweet = streams.home[streams.home.length-1];
+          var $tweet = $('<div></div>');
+          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $tweet.appendTo($body);
+        }
+
+        setInterval(aTest, 1000);
       });
+
+
 
     </script>
   </body>
