@@ -6,16 +6,25 @@
   </head>
   <body>
     <script>
-        //----INITIAL STATE--
+        //----INITIAL STATE----
       $(document).ready(function(){
         var $body = $('body');
         $body.html('');
 
-        //----PAUSE BUTTON----
-        $body.append('<button id="pause">Stop THIS MADNESS!!!</button>');
+        //----PAUSE/RESUME BUTTON----
+        $body.append('<button id="pause">PAUSE THIS MADNESS!!!</button>');
         $('#pause').on('click', function(){
           clearInterval(intervalID);
+          $(this).hide();
+          $('#resume').show();
         });
+        $body.append('<button id="resume">RESUME THIS MADNESS!!!</button>');
+        $('#resume').on('click', function(){
+          intervalID = setInterval(displayTweets, 500);
+          $(this).hide();
+          $('#pause').show();
+        });
+        $('#resume').hide();
 
         //---DISPLAY TWEETS FUNCTION----
         var displayTweets = function(){
