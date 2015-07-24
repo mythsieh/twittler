@@ -40,8 +40,9 @@
               'href': '#',
               on: {
                 click: function() {
+                  var parentClass = $(this).parent().attr('class');
                   for (var i = 0; i < users.length; i++) {
-                    if (users[i] != tweet.user) {
+                    if (users[i] != parentClass) {
                       $('.' + users[i]).detach();
                     }
                   }
