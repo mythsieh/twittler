@@ -10,6 +10,8 @@
       $(document).ready(function(){
         var $body = $('body');
         $body.html('');
+        //****savedHome is container for ALL tweets****
+        var savedHome = [];
 
         //----PAUSE BUTTON----
         $body.append('<button id="pause">PAUSE THIS MADNESS!!!</button>');
@@ -33,6 +35,7 @@
         $('#return').on('click', function(){
           returnToAllTweets();
           $('#return').hide();
+          $('#resume').show();
         });
         $('#return').hide();
 
@@ -48,7 +51,7 @@
         };
 
         //----TWEET MAKER----
-        var tweetMaker = function(tweetArray){
+        var tweetMaker = function(tweetArray, pushToArray){
           var index = tweetArray.length - 1;
           while(index >=0) {
             var tweet = tweetArray[index];
@@ -62,46 +65,30 @@
                   var parentClass = $(this).parent().attr('class');
                   clickOnUser(parentClass);
                   $('#return').show();
+                  $('#resume').hide();
                 }
               }
             }).html('@' + tweet.user).appendTo(tweetContainer);
             $('<span/>').text(':' + tweet.message + ' at ' + tweet.created_at).appendTo(tweetContainer);
+            if (pushToArray != undefined) {
+              pushToArray.push(tweet);
+            }
             index -= 1;
+          }
+          if (pushToArray != undefined) {
+            tweetArray.length = 0;
           }
         };
 
         //----RETURN TO SEE ALL TWEETS----
-
-        var savedHome = [];
         var returnToAllTweets = function(){
           $('div').remove();
           tweetMaker(savedHome);
         };
 
-
         //----DISPLAY TWEETS FUNCTION----
         var displayTweets = function(){
-          var index = streams.home.length - 1;
-          while(index >= 0){
-            var tweet = streams.home[index];
-            savedHome.push(tweet);
-            var tweetContainer = $('<div/>', {
-              'class': tweet.user,
-            }).appendTo($body);
-            var userHandle = $('<a/>', {
-              'href': '#',
-              on: {
-                click: function() {
-                  var parentClass = $(this).parent().attr('class');
-                  clickOnUser(parentClass);
-                  $('#return').show();
-                }
-              }
-            }).html('@' + tweet.user).appendTo(tweetContainer);
-            $('<span/>').text(':' + tweet.message + ' at ' + tweet.created_at).appendTo(tweetContainer);
-            index -= 1;
-          }
-          streams.home = [];
+          tweetMaker(streams.home, savedHome);
         };
 
         //----INITIALIZE----
