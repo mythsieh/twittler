@@ -26,15 +26,20 @@
         });
         $('#resume').hide();
 
+        //----CLICK ON USER FUNCTIONALITY----
+        var onDisplayUser;
+        var currentUser;
+
         //---DISPLAY TWEETS FUNCTION----
         var displayTweets = function(){
           var index = streams.home.length - 1;
           while(index >= 0){
             var tweet = streams.home[index];
-            var $tweet = $('<div></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message);
-            $tweet.appendTo($body);
+            $('<div/>', {
+              'class': tweet.user,
+            }).html('<a href="#">' + '@' + tweet.user + '</a>' + ': ' + tweet.message + ' at ' + tweet.created_at).appendTo($body)
             index -= 1;
+            });
           }
           streams.home = [];
         };
@@ -43,8 +48,6 @@
         displayTweets();
         var intervalID = setInterval(displayTweets, 500);
       });
-
-
 
     </script>
   </body>
