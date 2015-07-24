@@ -11,13 +11,15 @@
         var $body = $('body');
         $body.html('');
 
-        //----PAUSE/RESUME BUTTON----
+        //----PAUSE BUTTON----
         $body.append('<button id="pause">PAUSE THIS MADNESS!!!</button>');
         $('#pause').on('click', function(){
           clearInterval(intervalID);
           $(this).hide();
           $('#resume').show();
         });
+
+        //----RESUME BUTTON----
         $body.append('<button id="resume">RESUME THIS MADNESS!!!</button>');
         $('#resume').on('click', function(){
           intervalID = setInterval(displayTweets, 500);
@@ -25,6 +27,14 @@
           $('#pause').show();
         });
         $('#resume').hide();
+
+        //----RETURN TO ALL TWEETS BUTTON----
+        $body.append('<button id="return">RETURN TO ALL TWEETS!!!</button>');
+        $('#return').on('click', function(){
+          returnToAllTweets();
+          $('#return').hide();
+        });
+        $('#return').hide();
 
         //----CLICK ON USER FUNCTIONALITY----
 
@@ -37,11 +47,14 @@
           $('#pause').click();
         };
 
-        //---DISPLAY TWEETS FUNCTION----
-        var displayTweets = function(){
-          var index = streams.home.length - 1;
+        //---RETURN TO SEE ALL TWEETS----
+
+        var savedHome = [];
+        var returnToAllTweets = function(){
+          $('div').remove()
+          var index = savedHome.length - 1;
           while(index >= 0){
-            var tweet = streams.home[index];
+            var tweet = savedHome[index];
             var tweetContainer = $('<div/>', {
               'class': tweet.user,
             }).appendTo($body);
@@ -51,6 +64,32 @@
                 click: function() {
                   var parentClass = $(this).parent().attr('class');
                   clickOnUser(parentClass);
+                  $('#return').show();
+                }
+              }
+            }).html('@' + tweet.user).appendTo(tweetContainer);
+            $('<span/>').text(':' + tweet.message + ' at ' + tweet.created_at).appendTo(tweetContainer);
+            index -= 1;
+          }
+        };
+
+
+        //---DISPLAY TWEETS FUNCTION----
+        var displayTweets = function(){
+          var index = streams.home.length - 1;
+          while(index >= 0){
+            var tweet = streams.home[index];
+            savedHome.push(tweet);
+            var tweetContainer = $('<div/>', {
+              'class': tweet.user,
+            }).appendTo($body);
+            var userHandle = $('<a/>', {
+              'href': '#',
+              on: {
+                click: function() {
+                  var parentClass = $(this).parent().attr('class');
+                  clickOnUser(parentClass);
+                  $('#return').show();
                 }
               }
             }).html('@' + tweet.user).appendTo(tweetContainer);
