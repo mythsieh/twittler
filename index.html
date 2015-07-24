@@ -47,14 +47,11 @@
           $('#pause').click();
         };
 
-        //---RETURN TO SEE ALL TWEETS----
-
-        var savedHome = [];
-        var returnToAllTweets = function(){
-          $('div').remove()
-          var index = savedHome.length - 1;
-          while(index >= 0){
-            var tweet = savedHome[index];
+        //----TWEET MAKER----
+        var tweetMaker = function(tweetArray){
+          var index = tweetArray.length - 1;
+          while(index >=0) {
+            var tweet = tweetArray[index];
             var tweetContainer = $('<div/>', {
               'class': tweet.user,
             }).appendTo($body);
@@ -73,8 +70,16 @@
           }
         };
 
+        //----RETURN TO SEE ALL TWEETS----
 
-        //---DISPLAY TWEETS FUNCTION----
+        var savedHome = [];
+        var returnToAllTweets = function(){
+          $('div').remove();
+          tweetMaker(savedHome);
+        };
+
+
+        //----DISPLAY TWEETS FUNCTION----
         var displayTweets = function(){
           var index = streams.home.length - 1;
           while(index >= 0){
