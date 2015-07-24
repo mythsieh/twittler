@@ -28,7 +28,7 @@
 
         //----CLICK ON USER FUNCTIONALITY----
         var onDisplayUser;
-        var currentUser;
+        var compareUser;
 
         //---DISPLAY TWEETS FUNCTION----
         var displayTweets = function(){
@@ -37,13 +37,20 @@
             var tweet = streams.home[index];
             $('<div/>', {
               'class': tweet.user,
-            }).html('<a href="#">' + '@' + tweet.user + '</a>' + ': ' + tweet.message + ' at ' + tweet.created_at).appendTo($body)
+              on: {
+                click: function() {
+                  for (var i = 0; i < users.length; i++) {
+                    if (users[i] != tweet.user) {
+                      $('.' + users[i]).detach();
+                    }
+                  }
+                }
+              }
+            }).html('<a href="#">' + '@' + tweet.user + '</a>' + ': ' + tweet.message + ' at ' + tweet.created_at).appendTo($body);
             index -= 1;
-            });
           }
           streams.home = [];
         };
-
         //----INITIALIZE----
         displayTweets();
         var intervalID = setInterval(displayTweets, 500);
