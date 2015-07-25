@@ -1,0 +1,24 @@
+body {
+  background: url(upfeathers.png);
+  width: 880px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.example-twitter {
+  color: black;
+  background: white;
+  padding: 15px 45px;
+  margin: 25px 0 0.5em;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+  line-height: 1.25em;
+  font-family: 'Arial';
+  display: inline-block;
+}
+
+a {
+  font-family: 'Fira Sans'
+}
